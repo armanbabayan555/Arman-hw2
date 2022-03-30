@@ -12,12 +12,13 @@ const sinon = require('sinon');
 describe("Test for getCityByZipCode function", function () {
 
     it("Normal case", function () {
-        expect(citiesService.getCityByZipCode(00210)).to.eventually.be.equal('Portsmouth,NH,United States');
         const stubbeedCitiesRepository = sinon.stub(citiesRepository, "getCityDataByZipCode")
             .withArgs("00210")
             .returns('Portsmouth,NH,United States');
 
-        citiesService.__set__("citiesRepository", stubbeedCitiesRepository);
+        citiesService.__set__("cityData", stubbeedCitiesRepository);
+
+        expect(citiesService.getCityByZipCode(00210)).to.eventually.be.equal('Portsmouth,NH,United States');
     })
     it("Error case", function () {
         const fakeZip = faker.address.zipCode();
